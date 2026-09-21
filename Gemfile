@@ -1,0 +1,10 @@
+source "https://rubygems.org"
+
+gem "jekyll", "~> 3.9.5"
+gem "webrick"
+gem "csv"
+gem "bigdecimal"
+gem "base64"
+gem "mutex_m"
+gem "logger"
+gem "kramdown-parser-gfm"
