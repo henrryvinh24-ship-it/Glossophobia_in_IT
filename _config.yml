@@ -2,63 +2,81 @@ url: https://henrryvinh24-ship-it.github.io
 baseurl: /Glossophobia_in_IT
 
 # Site settings
-title: Glossophobia - Sinh Viên IT
+title: Glossophobia in IT
 email: henrryvinh@gmail.com
-description: "Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description."
+description: "Nghiên cứu về hội chứng sợ giao tiếp (Glossophobia) ở sinh viên ngành Công nghệ Thông tin - Thực trạng, nguyên nhân và giải pháp."
 
-
+# bundle exec jekyll serve
 # Team names, titles and social links
 people:
 - name: Phạm Phú Vinh
   pic: 1
   position: Leader
   social:
-    - title: twitter
-      url: #
+    - title: envelope
+      url: "https://mail.google.com/mail/?view=cm&fs=1&to=henrryvinh24@gmail.com"
     - title: facebook
-      url: #
-    - title: stack-overflow
-      url: #
+      url: https://www.facebook.com/pham.henrry.98
+    - title: phone
+      url: https://zalo.me/0326614606
+    - title: user
+      url: https://henrryvinh24-ship-it.github.io/mycv/
 
 - name: Lê Trí Mẫn
   pic: 2
-  position: Lead Designer
-  social:
-    - title: twitter
-      url: #
-    - title: facebook
-      url: #
-    - title: linkedin
-      url: #
-
-- name: 
-  pic: 3
   position: Designer
   social:
-    - title: twitter
-      url: #
+    - title: envelope
+      url: "https://mail.google.com/mail/?view=cm&fs=1&to=letritin40@gmail.com"
     - title: facebook
-      url: #
-    - title: google-plus
-      url: #
+      url: https://www.facebook.com/share/18X5HRyWHr/
+    - title: phone
+      url: https://zalo.me/0352125703
+
+- name: Ngô Phạm Sỹ Nguyên
+  pic: 3
+  position: Content Creator
+  social:
+    - title: envelope
+      url: "https://mail.google.com/mail/?view=cm&fs=1&to=synguyen321dm@gmail.com"
+    - title: facebook
+      url: https://www.facebook.com/ng.suy.2025/
+    - title: phone
+      url: https://zalo.me/0939594718
+
+- name: Lê Dư Hoài
+  pic: 4
+  position: Content Creator
+  social:
+    - title: envelope
+      url: "https://mail.google.com/mail/?view=cm&fs=1&to=leduhoai0408@gmail.com"
+    - title: facebook
+      url: https://www.facebook.com/share/1JfomV3e2e/?mibextid=wwXIfr
+    - title: phone
+      url: https://zalo.me/0896049192
+
+- name: Phạm Nguyễn Trung Tín
+  pic: 5
+  position: Content Creator
+  social:
+    - title: envelope
+      url: "https://mail.google.com/mail/?view=cm&fs=1&to=tin1852007@gmail.com"
+    - title: facebook
+      url: https://www.facebook.com/share/1DdywwQSfG/
+    - title: phone
+      url: https://zalo.me/0945201050
 
 # Social networks usernames (many more available: google-plus, flickr, dribbble, pinterest, instagram, tumblr, linkedin, etc.)
 social:
-  - title: twitter
-    url: http://twitter.com/jekyllrb
   - title: facebook
     url:
-  - title: stack-overflow
-    url: http://stackoverflow.com/questions/tagged/jekyll
-  - title: bitbucket 
-    url: http://bitbucket.org/jekyll
   - title: github
-    url: http://github.com/jekyll
+    url: 
 
 # Postal address (add as many lines as necessary)
 address:
-  - line: 3481 Melrose Place
-  - line: Beverly Hills, CA 90210
+  - line: 600 Nguyễn Văn Cừ nối dài
+  - line: An Bình, Ninh Kiều, Cần Thơ
 
 # Build settings
 markdown: kramdown
