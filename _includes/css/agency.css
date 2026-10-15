@@ -865,3 +865,19 @@ img::-moz-selection {
 body {
     webkit-tap-highlight-color: #{{ site.data.template.color.primary }};
 }
+
+/* Khắc phục lỗi hở khoảng trắng phía trên thanh điều hướng */
+body {
+    margin: 0 !important;
+    padding-top: 0 !important;
+}
+
+.navbar-fixed-top, .navbar {
+    margin-bottom: 0 !important;
+    border: none !important;
+}
+
+/* Đảm bảo phần đầu trang chủ bắt đầu từ sát đỉnh màn hình */
+header {
+    margin-top: 0 !important;
+}
