@@ -1,29 +1,35 @@
 ---
 layout: style
 ---
-/* --- FIX TRIỆT ĐỂ LỖI TRÀN MÀN HÌNH TRÊN ĐIỆN THOẠI --- */
+/* --- TRỊ TẬN GỐC LỖI TRÀN MÀN HÌNH MOBILE --- */
+* {
+    box-sizing: border-box !important;
+}
+
 html, body {
+    width: 100% !important;
     max-width: 100% !important;
     overflow-x: hidden !important;
-    position: relative;
+    position: relative !important;
 }
 
-.container {
+/* Ép toàn bộ container, row, hình ảnh và khối nội dung co giãn theo màn hình điện thoại */
+.container, .container-fluid, .row {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
     padding-left: 15px !important;
     padding-right: 15px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    width: 100% !important;
+    overflow-x: hidden !important;
 }
 
-/* Đảm bảo tiêu đề lớn không bị tràn khung trên mobile */
-@media (max-width: 767px) {
-    header .intro-text .intro-heading {
-        font-size: 36px !important; /* Thu nhỏ chữ tiêu đề trên điện thoại cho vừa vặn */
-        line-height: 40px !important;
-    }
-    
-    header .intro-text .intro-lead-in {
-        font-size: 18px !important;
-    }
+img, video, canvas, svg {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* Ẩn các thanh cuộn ngang gây khó chịu trên mobile */
+body::-webkit-scrollbar {
+    display: none;
 }
