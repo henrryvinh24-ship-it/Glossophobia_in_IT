@@ -1,35 +1,109 @@
 ---
 layout: style
 ---
-/* --- TRỊ TẬN GỐC LỖI TRÀN MÀN HÌNH MOBILE --- */
-* {
-    box-sizing: border-box !important;
-}
 
+/* ==========================================================================
+   1. KHẮC PHỤC KHOẢNG TRẮNG ĐẦU TRANG & CHỐNG TRÀN MÀN HÌNH
+   ========================================================================== */
 html, body {
+    margin: 0 !important;
+    padding: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
     overflow-x: hidden !important;
-    position: relative !important;
 }
 
-/* Ép toàn bộ container, row, hình ảnh và khối nội dung co giãn theo màn hình điện thoại */
-.container, .container-fluid, .row {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    padding-left: 15px !important;
-    padding-right: 15px !important;
-    overflow-x: hidden !important;
+.navbar-fixed-top, .navbar {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    border: none !important;
 }
 
-img, video, canvas, svg {
+header {
+    margin-top: 0 !important;
+}
+
+img, video, iframe, canvas, svg {
     max-width: 100% !important;
     height: auto !important;
 }
 
-/* Ẩn các thanh cuộn ngang gây khó chịu trên mobile */
-body::-webkit-scrollbar {
-    display: none;
+/* ==========================================================================
+   2. TỐI ƯU GIAO DIỆN ĐIỆN THOẠI (CHỈ DÙNG CSS)
+   ========================================================================== */
+@media (max-width: 767px) {
+    /* Giữ khoảng cách lề 2 bên vừa vặn, không bị sát mép cũng không bị tràn */
+    .container {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    section {
+        padding: 60px 0 !important;
+    }
+
+    /* Thu nhỏ chữ tiêu đề chính để không bị cắt mất chữ "BIA" trên điện thoại */
+    header .intro-text {
+        padding-top: 110px !important;
+        padding-bottom: 60px !important;
+    }
+
+    header .intro-text .intro-lead-in {
+        font-size: 18px !important;
+        line-height: 24px !important;
+        margin-bottom: 15px !important;
+    }
+
+    header .intro-text .intro-heading {
+        font-size: 30px !important;
+        line-height: 38px !important;
+        margin-bottom: 25px !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+    }
+
+    /* Thu nhỏ tiêu đề các mục lớn */
+    section h2.section-heading {
+        font-size: 28px !important;
+        line-height: 34px !important;
+    }
+
+    section h3.section-subheading {
+        margin-bottom: 40px !important;
+        font-size: 15px !important;
+        line-height: 22px !important;
+    }
+
+    /* Sửa lỗi chữ phần Timeline (CBT, Counterconditioning) bị ép hẹp */
+    .timeline > li .timeline-panel {
+        padding: 0 10px 0 85px !important;
+    }
+
+    .timeline .timeline-heading h4 {
+        font-size: 16px !important;
+        word-wrap: break-word !important;
+    }
+
+    /* Ép 5 cột thành viên trong Amazing Team xếp dọc thành từng khối rõ ràng trên mobile */
+    #team [class*="col-"] {
+        width: 100% !important;
+        float: none !important;
+        margin-bottom: 35px !important;
+        display: block !important;
+    }
+
+    .team-member img {
+        max-width: 160px !important;
+    }
+
+    /* Ép dòng chữ "Project of Group 2..." ở Footer tự căn giữa trên điện thoại dù HTML đang có class text-right */
+    footer .col-md-4,
+    footer .text-right {
+        text-align: center !important;
+        line-height: 24px !important;
+        margin-bottom: 10px !important;
+    }
 }
