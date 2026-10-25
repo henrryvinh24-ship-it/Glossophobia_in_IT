@@ -1,17 +1,29 @@
 ---
 layout: style
 ---
-/* --- SỬA TRIỆT ĐỂ KHOẢNG TRẮNG ĐẦU TRANG --- */
-body {
-    margin: 0 !important;
-    padding-top: 0 !important;
+/* --- FIX TRIỆT ĐỂ LỖI TRÀN MÀN HÌNH TRÊN ĐIỆN THOẠI --- */
+html, body {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    position: relative;
 }
 
-.navbar-fixed-top, .navbar {
-    margin-bottom: 0 !important;
-    border: none !important;
+.container {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100% !important;
 }
 
-header {
-    margin-top: 0 !important;
+/* Đảm bảo tiêu đề lớn không bị tràn khung trên mobile */
+@media (max-width: 767px) {
+    header .intro-text .intro-heading {
+        font-size: 36px !important; /* Thu nhỏ chữ tiêu đề trên điện thoại cho vừa vặn */
+        line-height: 40px !important;
+    }
+    
+    header .intro-text .intro-lead-in {
+        font-size: 18px !important;
+    }
 }
