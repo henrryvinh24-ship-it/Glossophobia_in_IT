@@ -107,3 +107,20 @@ img, video, iframe, canvas, svg {
         margin-bottom: 10px !important;
     }
 }
+
+/* Sửa lỗi hiển thị đầy đủ khung video YouTube */
+.embed-responsive-16by9 {
+    padding-bottom: 56.25% !important;
+    height: 0 !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.embed-responsive-16by9 iframe {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    border: 0 !important;
+}
