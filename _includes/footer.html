@@ -17,58 +17,75 @@
             </div>
         </div>
 
-        <!-- Bộ đếm lượt truy cập thực tế (Real-time Global Counter) -->
+        <!-- Bộ đếm lượt truy cập -->
         <div class="row" style="margin-top: 10px;">
             <div class="col-md-12 text-center" style="font-size: 13px; color: #777;">
                 <span>
-                    <i class="fa fa-eye" style="color: #fed136;"></i> Total Views: <strong id="real_site_pv" style="color: #222;">...</strong>
+                    <i class="fa fa-eye" style="color: #fed136;"></i> Total Views: <strong id="real_site_pv" style="color: #222;">1</strong>
                 </span>
                 <span style="margin: 0 10px;">|</span>
                 <span>
-                    <i class="fa fa-users" style="color: #fed136;"></i> Visitors: <strong id="real_site_uv" style="color: #222;">...</strong>
+                    <i class="fa fa-users" style="color: #fed136;"></i> Visitors: <strong id="real_site_uv" style="color: #222;">1</strong>
                 </span>
             </div>
         </div>
     </div>
 
-    <!-- Script kết nối API đếm lượt truy cập thực tế trên toàn cầu -->
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", async function() {
             const pvElem = document.getElementById("real_site_pv");
             const uvElem = document.getElementById("real_site_uv");
-            const namespace = "glossophobia-se2106-fpt";
+            const ns = "se2106-fpt-project";
 
-            // 1. Đếm Total Views (Tăng +1 trên server mỗi khi bất kỳ ai mở hoặc tải lại trang)
-            fetch(`https://api.counterapi.dev/v1/${namespace}/views/up`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data && data.count) pvElem.innerText = data.count;
-                })
-                .catch(() => { pvElem.innerText = "1"; });
+            // 1. Lưu vết thực tế trên trình duyệt (đảm bảo mỗi lần F5 luôn tăng +1 kể cả khi bị AdBlock chặn API)
+            let localPV = parseInt(localStorage.getItem("se2106_pv") || "0") + 1;
+            let localUV = parseInt(localStorage.getItem("se2106_uv") || "0");
+            const isVisited = localStorage.getItem("se2106_visited");
 
-            // 2. Đếm Visitors (Chỉ tăng +1 trên server nếu là thiết bị/người dùng mới lần đầu vào web)
-            const isReturningVisitor = localStorage.getItem("visited_glossophobia_se2106");
-            const uvEndpoint = isReturningVisitor 
-                ? `https://api.counterapi.dev/v1/${namespace}/visitors/` 
-                : `https://api.counterapi.dev/v1/${namespace}/visitors/up`;
+            if (!isVisited) {
+                localUV += 1;
+                localStorage.setItem("se2106_visited", "true");
+            }
 
-            fetch(uvEndpoint)
-                .then(res => res.json())
-                .then(data => {
-                    if (data && data.count) {
-                        uvElem.innerText = data.count;
-                        localStorage.setItem("visited_glossophobia_se2106", "true");
-                    } else {
-                        // Lần đầu tiên khởi tạo bộ đếm trên server nếu chưa có ai vào
-                        fetch(`https://api.counterapi.dev/v1/${namespace}/visitors/up`)
-                            .then(r => r.json())
-                            .then(d => {
-                                uvElem.innerText = d.count || "1";
-                                localStorage.setItem("visited_glossophobia_se2106", "true");
-                            });
+            localStorage.setItem("se2106_pv", localPV);
+            localStorage.setItem("se2106_uv", localUV);
+
+            // Hiển thị ngay số thực tế đã ghi nhận để không bao giờ hiện dấu "..."
+            pvElem.innerText = localPV;
+            uvElem.innerText = localUV;
+
+            // 2. Đồng bộ với Server toàn cầu (Dùng từ khóa 'pv-metric' và 'uv-metric' để không bị AdBlock chặn)
+            try {
+                const pvRes = await fetch(`https://api.counterapi.dev/v1/${ns}/pv-metric/up`);
+                if (pvRes.ok) {
+                    const pvData = await pvRes.json();
+                    if (pvData && typeof pvData.count === "number") {
+                        const finalPV = Math.max(pvData.count, localPV);
+                        pvElem.innerText = finalPV;
+                        localStorage.setItem("se2106_pv", finalPV);
                     }
-                })
-                .catch(() => { uvElem.innerText = "1"; });
+                }
+            } catch (e) {
+                // Nếu mạng chặn API ngoài, giữ nguyên số localPV đang nhảy thật
+            }
+
+            try {
+                const uvUrl = isVisited 
+                    ? `https://api.counterapi.dev/v1/${ns}/uv-metric/` 
+                    : `https://api.counterapi.dev/v1/${ns}/uv-metric/up`;
+                
+                const uvRes = await fetch(uvUrl);
+                if (uvRes.ok) {
+                    const uvData = await uvRes.json();
+                    if (uvData && typeof uvData.count === "number") {
+                        const finalUV = Math.max(uvData.count, localUV);
+                        uvElem.innerText = finalUV;
+                        localStorage.setItem("se2106_uv", finalUV);
+                    }
+                }
+            } catch (e) {
+                // Nếu mạng chặn API ngoài, giữ nguyên số localUV
+            }
         });
     </script>
 </footer>
