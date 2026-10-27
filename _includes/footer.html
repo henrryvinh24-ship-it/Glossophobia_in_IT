@@ -17,20 +17,58 @@
             </div>
         </div>
 
-        <!-- Bộ đếm lượt truy cập thật từ Busuanzi -->
+        <!-- Bộ đếm lượt truy cập thực tế (Real-time Global Counter) -->
         <div class="row" style="margin-top: 10px;">
             <div class="col-md-12 text-center" style="font-size: 13px; color: #777;">
-                <span id="busuanzi_container_site_pv">
-                    <i class="fa fa-eye" style="color: #fed136;"></i> Total Views: <strong id="busuanzi_value_site_pv" style="color: #222;">...</strong>
+                <span>
+                    <i class="fa fa-eye" style="color: #fed136;"></i> Total Views: <strong id="real_site_pv" style="color: #222;">...</strong>
                 </span>
                 <span style="margin: 0 10px;">|</span>
-                <span id="busuanzi_container_site_uv">
-                    <i class="fa fa-users" style="color: #fed136;"></i> Visitors: <strong id="busuanzi_value_site_uv" style="color: #222;">...</strong>
+                <span>
+                    <i class="fa fa-users" style="color: #fed136;"></i> Visitors: <strong id="real_site_uv" style="color: #222;">...</strong>
                 </span>
             </div>
         </div>
     </div>
 
-    <!-- Script kết nối trực tiếp đến máy chủ thống kê lượt truy cập thật -->
-    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <!-- Script kết nối API đếm lượt truy cập thực tế trên toàn cầu -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const pvElem = document.getElementById("real_site_pv");
+            const uvElem = document.getElementById("real_site_uv");
+            const namespace = "glossophobia-se2106-fpt";
+
+            // 1. Đếm Total Views (Tăng +1 trên server mỗi khi bất kỳ ai mở hoặc tải lại trang)
+            fetch(`https://api.counterapi.dev/v1/${namespace}/views/up`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.count) pvElem.innerText = data.count;
+                })
+                .catch(() => { pvElem.innerText = "1"; });
+
+            // 2. Đếm Visitors (Chỉ tăng +1 trên server nếu là thiết bị/người dùng mới lần đầu vào web)
+            const isReturningVisitor = localStorage.getItem("visited_glossophobia_se2106");
+            const uvEndpoint = isReturningVisitor 
+                ? `https://api.counterapi.dev/v1/${namespace}/visitors/` 
+                : `https://api.counterapi.dev/v1/${namespace}/visitors/up`;
+
+            fetch(uvEndpoint)
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.count) {
+                        uvElem.innerText = data.count;
+                        localStorage.setItem("visited_glossophobia_se2106", "true");
+                    } else {
+                        // Lần đầu tiên khởi tạo bộ đếm trên server nếu chưa có ai vào
+                        fetch(`https://api.counterapi.dev/v1/${namespace}/visitors/up`)
+                            .then(r => r.json())
+                            .then(d => {
+                                uvElem.innerText = d.count || "1";
+                                localStorage.setItem("visited_glossophobia_se2106", "true");
+                            });
+                    }
+                })
+                .catch(() => { uvElem.innerText = "1"; });
+        });
+    </script>
 </footer>
