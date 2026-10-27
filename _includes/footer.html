@@ -17,55 +17,20 @@
             </div>
         </div>
 
-        <!-- Bộ đếm lượt truy cập (Đã tích hợp cơ chế dự phòng, hiển thị 100% không lo mất số) -->
+        <!-- Bộ đếm lượt truy cập thật từ Busuanzi -->
         <div class="row" style="margin-top: 10px;">
             <div class="col-md-12 text-center" style="font-size: 13px; color: #777;">
-                <span id="busuanzi_container_site_pv" style="display: inline !important;">
-                    <i class="fa fa-eye" style="color: #fed136;"></i> Total Views: <strong id="busuanzi_value_site_pv" style="color: #222;">128</strong>
+                <span id="busuanzi_container_site_pv">
+                    <i class="fa fa-eye" style="color: #fed136;"></i> Total Views: <strong id="busuanzi_value_site_pv" style="color: #222;">...</strong>
                 </span>
                 <span style="margin: 0 10px;">|</span>
-                <span id="busuanzi_container_site_uv" style="display: inline !important;">
-                    <i class="fa fa-users" style="color: #fed136;"></i> Visitors: <strong id="busuanzi_value_site_uv" style="color: #222;">45</strong>
+                <span id="busuanzi_container_site_uv">
+                    <i class="fa fa-users" style="color: #fed136;"></i> Visitors: <strong id="busuanzi_value_site_uv" style="color: #222;">...</strong>
                 </span>
             </div>
         </div>
     </div>
 
-    <!-- Script chạy bộ đếm kết hợp cơ chế dự phòng thông minh -->
+    <!-- Script kết nối trực tiếp đến máy chủ thống kê lượt truy cập thật -->
     <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var pvElem = document.getElementById("busuanzi_value_site_pv");
-            var uvElem = document.getElementById("busuanzi_value_site_uv");
-
-            // Khởi tạo bộ đếm lưu trên trình duyệt để hiển thị ngay lập tức
-            var localPV = localStorage.getItem("glossophobia_pv");
-            var localUV = localStorage.getItem("glossophobia_uv");
-
-            if (!localPV) {
-                localPV = 128; 
-                localUV = 45;  
-            } else {
-                localPV = parseInt(localPV) + 1;
-            }
-
-            localStorage.setItem("glossophobia_pv", localPV);
-            localStorage.setItem("glossophobia_uv", localUV);
-
-            pvElem.innerText = localPV;
-            uvElem.innerText = localUV;
-
-            // Đảm bảo luôn hiển thị kể cả khi mạng chậm hoặc bị chặn
-            setTimeout(function() {
-                document.getElementById("busuanzi_container_site_pv").style.display = "inline";
-                document.getElementById("busuanzi_container_site_uv").style.display = "inline";
-                if (!pvElem.innerText || pvElem.innerText.trim() === "") {
-                    pvElem.innerText = localPV;
-                }
-                if (!uvElem.innerText || uvElem.innerText.trim() === "") {
-                    uvElem.innerText = localUV;
-                }
-            }, 1000);
-        });
-    </script>
 </footer>
